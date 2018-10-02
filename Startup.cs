@@ -33,6 +33,7 @@ namespace iRacing_League_Scoring
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IDriverManager, DriverManager>();
+            services.AddScoped<ISeasonManager, SeasonManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

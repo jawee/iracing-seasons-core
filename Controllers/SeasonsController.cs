@@ -4,6 +4,8 @@ using iRacing_League_Scoring.Models;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using iRacing_League_Scoring.Managers;
+using iRacing_League_Scoring.Managers.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace iRacing_League_Scoring.Controllers 
@@ -12,9 +14,12 @@ namespace iRacing_League_Scoring.Controllers
     [ApiController]
     public class SeasonsController : IRControllerBase
     {
+
+        private readonly ISeasonManager _manager;
         
         public SeasonsController(IServiceProvider service) : base(service)
         {
+            _manager = Service.GetService<ISeasonManager>();
         }
 
         [HttpGet]
@@ -37,8 +42,7 @@ namespace iRacing_League_Scoring.Controllers
         [HttpPost]
         public IActionResult Create(Season item)
         {
-            Context.Seasons.Add(item);
-            Context.SaveChanges();
+            _manager.CreateSeason(item);
 
             return CreatedAtRoute("GetSeason", new { id = item.Id }, item);
         }
