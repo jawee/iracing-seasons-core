@@ -4,30 +4,29 @@ using iRacing_League_Scoring.Models;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace iRacing_League_Scoring.Controllers 
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeasonsController : ControllerBase
+    public class SeasonsController : IRControllerBase
     {
-        private readonly IRacingLeagueScoringContext _context;
-
-        public SeasonsController(IRacingLeagueScoringContext context)
+        
+        public SeasonsController(IServiceProvider service) : base(service)
         {
-            _context = context;
         }
 
         [HttpGet]
         public ActionResult<List<Season>> GetAll()
         {
-            return _context.Seasons.ToList();
+            return Context.Seasons.ToList();
         }
 
         [HttpGet("{id}", Name = "GetSeason")]
         public ActionResult<Season> GetById(long id)
         {
-            var item = _context.Seasons.Find(id);
+            var item = Context.Seasons.Find(id);
             if (item == null)
             {
                 return NotFound();
@@ -38,8 +37,8 @@ namespace iRacing_League_Scoring.Controllers
         [HttpPost]
         public IActionResult Create(Season item)
         {
-            _context.Seasons.Add(item);
-            _context.SaveChanges();
+            Context.Seasons.Add(item);
+            Context.SaveChanges();
 
             return CreatedAtRoute("GetSeason", new { id = item.Id }, item);
         }
@@ -47,7 +46,7 @@ namespace iRacing_League_Scoring.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(long id, Season item)
         {
-            var season = _context.Seasons.Find(id);
+            var season = Context.Seasons.Find(id);
             if (season == null)
             {
                 return NotFound();
@@ -55,23 +54,23 @@ namespace iRacing_League_Scoring.Controllers
             season.Name = item.Name;
             season.StartDate = item.StartDate;
             season.EndDate = item.EndDate;
-            
-            _context.Seasons.Update(season);
-            _context.SaveChanges();
+
+            Context.Seasons.Update(season);
+            Context.SaveChanges();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var season = _context.Seasons.Find(id);
+            var season = Context.Seasons.Find(id);
             if (season == null)
             {
                 return NotFound();
             }
 
-            _context.Seasons.Remove(season);
-            _context.SaveChanges();
+            Context.Seasons.Remove(season);
+            Context.SaveChanges();
             return NoContent();
         }
     }
