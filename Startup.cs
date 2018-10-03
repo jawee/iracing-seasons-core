@@ -34,6 +34,9 @@ namespace iRacing_League_Scoring
 
             services.AddScoped<IDriverManager, DriverManager>();
             services.AddScoped<ISeasonManager, SeasonManager>();
+            services.AddScoped<IRegisterRaceManager, RegisterRaceManager>();
+            services.AddScoped<IRaceManager, RaceManager>();
+            services.AddScoped<IRaceRowManager, RaceRowManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

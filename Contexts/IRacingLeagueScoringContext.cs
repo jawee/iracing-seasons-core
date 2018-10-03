@@ -12,6 +12,12 @@ namespace iRacing_League_Scoring.Contexts
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Season>().HasMany(s => s.Races).WithOne(s => s.Season);
+            modelBuilder.Entity<Race>().HasOne(r => r.Season);
+        }
+
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Race> Races { get; set; }

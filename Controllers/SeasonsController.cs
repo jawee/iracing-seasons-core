@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using iRacing_League_Scoring.Managers;
 using iRacing_League_Scoring.Managers.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace iRacing_League_Scoring.Controllers 
 {
@@ -23,20 +24,17 @@ namespace iRacing_League_Scoring.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Season>> GetAll()
+        public ActionResult<string> GetAll()
         {
-            return Context.Seasons.ToList();
+            var results = _manager.GetSeasons();
+            return JsonConvert.SerializeObject(results);
         }
 
         [HttpGet("{id}", Name = "GetSeason")]
         public ActionResult<Season> GetById(long id)
         {
-            var item = Context.Seasons.Find(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return item;
+            var result = _manager.GetSeason(id);
+            return result;
         }
 
         [HttpPost]
@@ -50,32 +48,24 @@ namespace iRacing_League_Scoring.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(long id, Season item)
         {
-            var season = Context.Seasons.Find(id);
-            if (season == null)
+            var result = _manager.UpdateSeason(id, item);
+            if(result) 
             {
-                return NotFound();
+                return NoContent();    
             }
-            season.Name = item.Name;
-            season.StartDate = item.StartDate;
-            season.EndDate = item.EndDate;
 
-            Context.Seasons.Update(season);
-            Context.SaveChanges();
-            return NoContent();
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            var season = Context.Seasons.Find(id);
-            if (season == null)
+            var result = _manager.DeleteSeason(id);
+            if(result)
             {
-                return NotFound();
+                return NoContent();
             }
-
-            Context.Seasons.Remove(season);
-            Context.SaveChanges();
-            return NoContent();
+            return NotFound();
         }
     }
 }

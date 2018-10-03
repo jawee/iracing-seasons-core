@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace iRacing_League_Scoring.Models {
     public class Season
@@ -10,5 +11,10 @@ namespace iRacing_League_Scoring.Models {
         public DateTime EndDate { get; set; }
 
         public List<Race> Races { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
