@@ -30,13 +30,16 @@ namespace iRacing_League_Scoring
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IRacingLeagueScoringContext>(opt => opt.UseSqlite("Data Source=iracingleaguescoring.db"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddScoped<IDriverManager, DriverManager>();
             services.AddScoped<ISeasonManager, SeasonManager>();
             services.AddScoped<IRegisterRaceManager, RegisterRaceManager>();
             services.AddScoped<IRaceManager, RaceManager>();
             services.AddScoped<IRaceRowManager, RaceRowManager>();
+            services.AddScoped<IPointCalculationManager, PointCalculationManager>();
+            
+            services.AddRouting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iRacing_League_Scoring.Contexts;
 
 namespace iRacingLeagueScoring.Migrations
 {
     [DbContext(typeof(IRacingLeagueScoringContext))]
-    partial class IRacingLeagueScoringContextModelSnapshot : ModelSnapshot
+    [Migration("20181004153305_Update20181004")]
+    partial class Update20181004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace iRacingLeagueScoring.Migrations
 
                     b.Property<string>("Car");
 
-                    b.Property<long?>("DriverId");
+                    b.Property<long>("DriverId");
 
                     b.Property<int>("Incidents");
 
@@ -71,7 +73,7 @@ namespace iRacingLeagueScoring.Migrations
 
                     b.Property<int>("Position");
 
-                    b.Property<long?>("RaceId");
+                    b.Property<long>("RaceId");
 
                     b.Property<int>("StartPosition");
 
@@ -112,11 +114,13 @@ namespace iRacingLeagueScoring.Migrations
                 {
                     b.HasOne("iRacing_League_Scoring.Models.Driver", "Driver")
                         .WithMany()
-                        .HasForeignKey("DriverId");
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("iRacing_League_Scoring.Models.Race", "Race")
                         .WithMany("RaceRows")
-                        .HasForeignKey("RaceId");
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

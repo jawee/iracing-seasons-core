@@ -4,13 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using iRacing_League_Scoring.Managers.Interfaces;
 using iRacing_League_Scoring.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace iRacing_League_Scoring.Managers
 {
     public class RaceRowManager : ManagerBase, IRaceRowManager
     {
+        private ISeasonManager _seasonManager;
+        private IRaceManager _raceManager;
         public RaceRowManager(IServiceProvider service) : base(service)
         {
+            _seasonManager = Service.GetService<ISeasonManager>();
+            _raceManager = Service.GetService<IRaceManager>();
         }
 
         public RaceRow CreateRaceRow(RaceRow raceRow)
@@ -62,6 +67,30 @@ namespace iRacing_League_Scoring.Managers
             Context.RaceRows.Update(raceRow);
             Context.SaveChanges();
             return true;
+        }
+
+        private RaceRow GetRaceRowForDriverInRace(long driverId, long raceId)
+        {
+            var raceRow = Context.RaceRows.SingleOrDefault(rr => rr.RaceId == raceId && rr.DriverId == driverId);
+            return raceRow;
+        }
+
+        public List<RaceRow> GetRaceRowsForDriverInSeason(long driverId, long seasonId)
+        {
+            var raceRows = new List<RaceRow>();
+
+            var season = _seasonManager.GetSeason(seasonId);
+
+            foreach(var race in season.Races)
+            {
+                var raceRow = GetRaceRowForDriverInRace(driverId, race.Id);
+                if(raceRow != null) 
+                {
+                    raceRows.Add(raceRow);
+                }
+            }
+        
+            return raceRows;
         }
     }
 }

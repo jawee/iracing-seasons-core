@@ -14,15 +14,11 @@ namespace iRacing_League_Scoring.Models {
         public int InfractionPoints { get; set; }
         public int PenaltyPoints { get; set; }
 
-        //relations id
+        //relations
         public long RaceId { get; set; }
-        public long DriverId { get; set; }
-
-        //Relations entity
-        [ForeignKey("RaceId")]
         public Race Race { get; set; }
-        [ForeignKey("DriverId")]
-        public Driver Driver { get; set; }
+        public long DriverId { get; set; }
+        public Driver Driver { get; set; }        
 
         public override string ToString()
         {

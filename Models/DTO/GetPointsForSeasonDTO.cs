@@ -4,12 +4,9 @@ using Newtonsoft.Json;
 
 namespace iRacing_League_Scoring.Models.DTO 
 {
-    public class RegisterRaceDTO
+    public class GetPointsForSeasonDTO
     {
-        public int SeasonId { get; set; }
-        public int RaceNumber { get; set; }
-        public RaceType RaceType { get; set; }
-        public IFormFile File {get;set;}
+        public long SeasonId { get; set; }
 
         public override string ToString()
         {

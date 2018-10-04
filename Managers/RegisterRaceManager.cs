@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper;
+using iRacing_League_Scoring.Enums;
 using iRacing_League_Scoring.Managers.Interfaces;
 using iRacing_League_Scoring.Models;
 using iRacing_League_Scoring.Models.DTO;
@@ -39,11 +40,11 @@ namespace iRacing_League_Scoring.Managers
             
             using (var reader = new StreamReader(fileReadStream))
             {
-                if(input.RaceType == 1) //Regular race
+                if(input.RaceType == RaceType.Normal) //Regular race
                 {
 
                 }
-                else if(input.RaceType == 2) //League race
+                else if(input.RaceType == RaceType.League) //League race
                 {
                     Console.WriteLine(reader.ReadLine());
                     var trackLine = reader.ReadLine();
@@ -58,15 +59,15 @@ namespace iRacing_League_Scoring.Managers
                     Console.WriteLine(reader.ReadLine());
                     Console.WriteLine(reader.ReadLine());
                 }
-                else if(input.RaceType == 3) //League race feature
+                else if(input.RaceType == RaceType.LeageFeature) //League race feature
                 {
 
                 }
-                else if(input.RaceType == 4) //League race sprint
+                else if(input.RaceType == RaceType.LeagueSprint) //League race sprint
                 {
                     
                 }
-                var race = _raceManager.CreateRace(new Race() {RaceNumber = input.RaceNumber, SeasonId = input.SeasonId, Track = track });
+                var race = _raceManager.CreateRace(new Race() {RaceNumber = input.RaceNumber, SeasonId = input.SeasonId, Track = track, RaceType = input.RaceType });
                 var csv = new CsvReader(reader);
                 csv.Configuration.RegisterClassMap<RaceRowCsvModelDTOClassMap>();
                 csv.Configuration.MissingFieldFound = null;
@@ -78,13 +79,13 @@ namespace iRacing_League_Scoring.Managers
                 foreach (var record in records)
                 {
                     var raceRow = new RaceRow();
-                    raceRow.DriverId = GetDriverId(record);
+                    // raceRow.DriverId = GetDriverId(record);
                     raceRow.Position = record.FinPos;
                     raceRow.Car = record.Car;
                     raceRow.Incidents = record.Inc;
                     raceRow.StartPosition = record.StartPos;
                     raceRow.Points = record.Pts;
-                    raceRow.RaceId = race.Id;
+                    // raceRow.RaceId = race.Id;
                     _raceRowManager.CreateRaceRow(raceRow);
                 }
             }

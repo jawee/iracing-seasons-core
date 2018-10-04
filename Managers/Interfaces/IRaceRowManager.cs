@@ -10,5 +10,7 @@ namespace iRacing_League_Scoring.Managers.Interfaces
         RaceRow GetRaceRow(long id);
         bool DeleteRaceRow(long id);
         bool UpdateRaceRow(long id, RaceRow item);
+
+        List<RaceRow> GetRaceRowsForDriverInSeason(long driverId, long seasonId);
     }
 }

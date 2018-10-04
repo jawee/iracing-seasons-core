@@ -26,10 +26,17 @@ namespace iRacing_League_Scoring.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> GetAllRaces()
+        public ActionResult<List<Race>> GetAllRaces()
         {
             var result = _manager.GetRaces();
-            return JsonConvert.SerializeObject(result);
+            return result;
+        }
+
+        [HttpGet("{id}", Name = "GetRace")]
+        public ActionResult<Race> GetById(long id)
+        {
+            var result = _manager.GetRace(id);
+            return result;
         }
     }
 }

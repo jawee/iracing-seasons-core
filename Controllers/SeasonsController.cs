@@ -24,10 +24,10 @@ namespace iRacing_League_Scoring.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> GetAll()
+        public ActionResult<List<Season>> GetAll()
         {
             var results = _manager.GetSeasons();
-            return JsonConvert.SerializeObject(results);
+            return results;
         }
 
         [HttpGet("{id}", Name = "GetSeason")]
