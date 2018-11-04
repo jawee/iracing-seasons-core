@@ -80,16 +80,16 @@ namespace iRacing_League_Scoring.Managers
             var raceRows = new List<RaceRow>();
 
             var season = _seasonManager.GetSeason(seasonId);
-
-            foreach(var race in season.Races)
-            {
-                var raceRow = GetRaceRowForDriverInRace(driverId, race.Id);
-                if(raceRow != null) 
+            if(season != null) {
+                foreach(var race in season.Races)
                 {
-                    raceRows.Add(raceRow);
+                    var raceRow = GetRaceRowForDriverInRace(driverId, race.Id);
+                    if(raceRow != null) 
+                    {
+                        raceRows.Add(raceRow);
+                    }
                 }
             }
-        
             return raceRows;
         }
     }
