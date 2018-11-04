@@ -2,6 +2,7 @@ using System;
 using iRacing_League_Scoring.Contexts;
 using iRacing_League_Scoring.Managers.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace iRacing_League_Scoring.Managers 
 {
@@ -9,6 +10,7 @@ namespace iRacing_League_Scoring.Managers
     {
         protected IServiceProvider Service { get; set; }
         protected IRacingLeagueScoringContext Context { get; set; }
+
         public ManagerBase(IServiceProvider service)
         {
             Service = service;

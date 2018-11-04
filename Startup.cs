@@ -14,6 +14,8 @@ using iRacing_League_Scoring.Contexts;
 using Microsoft.EntityFrameworkCore;
 using iRacing_League_Scoring.Managers.Interfaces;
 using iRacing_League_Scoring.Managers;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace iRacing_League_Scoring
 {
@@ -31,6 +33,12 @@ namespace iRacing_League_Scoring
         {
             services.AddDbContext<IRacingLeagueScoringContext>(opt => opt.UseSqlite("Data Source=iracingleaguescoring.db"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "iRacing Season Scoring API", Version = "v1" });
+            });
 
             services.AddScoped<IDriverManager, DriverManager>();
             services.AddScoped<ISeasonManager, SeasonManager>();
@@ -56,6 +64,16 @@ namespace iRacing_League_Scoring
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "iRacing Season Scoring API");
+                c.RoutePrefix = string.Empty;
+            });
         }
     }
 }

@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace iRacing_League_Scoring.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PointScoringController : IRControllerBase
     {
@@ -26,14 +26,16 @@ namespace iRacing_League_Scoring.Controllers
             _manager = Service.GetService<IPointCalculationManager>();
         }
 
-        // [HttpPost]
-        // public ActionResult Post([FromForm] GetPointsForDriverAndSeasonDTO input)
-        // {
-        //     var points = _manager.CalculatePointsForDriverInSeason(input.DriverId, input.SeasonId);
-        //     return Ok(points);
-        // }
+        [HttpPost]
+        [ActionName("GetPointsForDriverAndSeason")]
+        public ActionResult Post([FromForm] GetPointsForDriverAndSeasonDTO input)
+        {
+            var points = _manager.CalculatePointsForDriverInSeason(input.DriverId, input.SeasonId);
+            return Ok(points);
+        }
 
         [HttpPost]
+        [ActionName("GetPointsForSeason")]
         public ActionResult<IDictionary<long, int>> PostSeason([FromForm] GetPointsForSeasonDTO input)
         {
             var dict = new Dictionary<long, int>();
