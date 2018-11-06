@@ -17,10 +17,10 @@ namespace iRacing_League_Scoring.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RaceController : IRControllerBase
+    public class RacesController : IRControllerBase
     {
         private readonly IRaceManager _manager;
-        public RaceController(IServiceProvider service) : base(service)
+        public RacesController(IServiceProvider service) : base(service)
         {
             _manager = Service.GetService<IRaceManager>();
         }
@@ -36,6 +36,14 @@ namespace iRacing_League_Scoring.Controllers
         public ActionResult<Race> GetById(long id)
         {
             var result = _manager.GetRace(id);
+            return result;
+        }
+
+        [HttpGet]
+        [Route("GetRacesForSeasonId")]
+        public ActionResult<List<Race>> GetRacesForSeasonId(long seasonId)
+        {
+            var result = _manager.GetRacesForSeasonId(seasonId);
             return result;
         }
     }

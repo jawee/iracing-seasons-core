@@ -8,6 +8,7 @@ namespace iRacing_League_Scoring.Managers.Interfaces
         Race CreateRace(Race race);
         List<Race> GetRaces();
         Race GetRace(long id);
+        List<Race> GetRacesForSeasonId(long seasonId);
         bool DeleteRace(long id);
         bool UpdateRace(long id, Race item);
     }

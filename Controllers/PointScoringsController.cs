@@ -17,11 +17,11 @@ namespace iRacing_League_Scoring.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PointScoringController : IRControllerBase
+    public class PointScoringsController : IRControllerBase
     {
         private readonly IPointCalculationManager _manager;
 
-        public PointScoringController(IServiceProvider service) : base(service)
+        public PointScoringsController(IServiceProvider service) : base(service)
         {
             _manager = Service.GetService<IPointCalculationManager>();
         }

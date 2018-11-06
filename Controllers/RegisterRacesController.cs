@@ -16,10 +16,10 @@ namespace iRacing_League_Scoring.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterRaceController : IRControllerBase
+    public class RegisterRacesController : IRControllerBase
     {
         private readonly IRegisterRaceManager _manager;
-        public RegisterRaceController(IServiceProvider service) : base(service)
+        public RegisterRacesController(IServiceProvider service) : base(service)
         {
             _manager = Service.GetService<IRegisterRaceManager>();
         }

@@ -17,10 +17,10 @@ namespace iRacing_League_Scoring.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DriverController : IRControllerBase
+    public class DriversController : IRControllerBase
     {
         private readonly IDriverManager _manager;
-        public DriverController(IServiceProvider service) : base(service)
+        public DriversController(IServiceProvider service) : base(service)
         {
             _manager = Service.GetService<IDriverManager>();
         }
