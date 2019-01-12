@@ -38,13 +38,8 @@ namespace iRacing_League_Scoring.Controllers
         [ActionName("GetPointsForSeason")]
         public ActionResult<List<PointScoringDTO>> PostSeason([FromForm] GetPointsForSeasonDTO input)
         {
-            var list = new List<PointScoringDTO>();
-            foreach(var driver in Context.Drivers)
-            {
-                var points = _manager.CalculatePointsForDriverInSeason(driver.Id, input.SeasonId);
-                list.Add(new PointScoringDTO { CustomerId = driver.CustomerId, Points = points});
-            }
-            return list;
+            var result = _manager.GetPointsForSeason(input.SeasonId);
+            return result;
         }
     }
 }

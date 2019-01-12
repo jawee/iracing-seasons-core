@@ -11,5 +11,7 @@ namespace iRacing_League_Scoring.Managers.Interfaces
         List<Race> GetRacesForSeasonId(long seasonId);
         bool DeleteRace(long id);
         bool UpdateRace(long id, Race item);
+
+        long GetRaceNumberForRaceId(long id);
     }
 }

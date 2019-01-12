@@ -34,6 +34,16 @@ namespace iRacing_League_Scoring.Managers
             return true;
         }
 
+        public long GetCustomerIdByDriverId(long driverId)
+        {
+            var driver = Context.Drivers.SingleOrDefault(d => d.Id == driverId);
+            if(driver == null)
+            {
+                return -1;
+            }
+            return driver.CustomerId;
+        }
+
         public Driver GetDriver(long id)
         {
             var driver = Context.Drivers.Find(id);
@@ -62,6 +72,16 @@ namespace iRacing_League_Scoring.Managers
                 driver = CreateDriver(new Driver() { CustomerId = record.CustID, Name = record.Name, Number = record.CarNumber});
             }
             return driver.Id;
+        }
+
+        public string GetDriverNameByDriverId(long driverId)
+        {
+            var driver = Context.Drivers.SingleOrDefault(d => d.Id == driverId);
+            if(driver == null)
+            {
+                return null;
+            }
+            return driver.Name;
         }
 
         public List<Driver> GetDrivers()

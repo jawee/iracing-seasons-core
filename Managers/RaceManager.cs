@@ -70,5 +70,15 @@ namespace iRacing_League_Scoring.Managers
             Context.SaveChanges();
             return true;
         }
+
+        public long GetRaceNumberForRaceId(long id) 
+        {
+            var race = GetRace(id);
+            if(race == null) 
+            {
+                return 0;
+            }
+            return race.RaceNumber;
+        }
     }
 }

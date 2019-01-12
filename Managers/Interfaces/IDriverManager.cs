@@ -12,7 +12,8 @@ namespace iRacing_League_Scoring.Managers.Interfaces
         bool DeleteDriver(long id);
         bool UpdateDriver(long id, Driver item);
         Driver GetDriverByCustomerId(int customerId);
-        
+        long GetCustomerIdByDriverId(long driverId);
+        string GetDriverNameByDriverId(long driverId);
         long GetDriverIdByCustomerIdOrCreate(RaceRowCsvModelDTO record);
     }
 }
