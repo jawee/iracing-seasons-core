@@ -36,15 +36,15 @@ namespace iRacing_League_Scoring.Controllers
 
         [HttpPost]
         [ActionName("GetPointsForSeason")]
-        public ActionResult<IDictionary<long, int>> PostSeason([FromForm] GetPointsForSeasonDTO input)
+        public ActionResult<List<PointScoringDTO>> PostSeason([FromForm] GetPointsForSeasonDTO input)
         {
-            var dict = new Dictionary<long, int>();
+            var list = new List<PointScoringDTO>();
             foreach(var driver in Context.Drivers)
             {
                 var points = _manager.CalculatePointsForDriverInSeason(driver.Id, input.SeasonId);
-                dict.Add(driver.CustomerId, points);
+                list.Add(new PointScoringDTO { CustomerId = driver.CustomerId, Points = points});
             }
-            return dict;
+            return list;
         }
     }
 }
