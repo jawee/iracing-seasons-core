@@ -10,6 +10,6 @@ namespace iRacing_League_Scoring.Managers.Interfaces
         Season GetSeason(long id);
         bool DeleteSeason(long id);
         bool UpdateSeason(long id, Season item);
-
+        List<long> GetDriversInSeasonBySeasonId(long seasonId);
     }
 }

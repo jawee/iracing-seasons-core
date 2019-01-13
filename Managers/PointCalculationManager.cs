@@ -70,10 +70,12 @@ namespace iRacing_League_Scoring.Managers
         {
             var driverManager = Service.GetService<IDriverManager>();
             var list = new List<PointScoringDTO>();
-            foreach(var driver in Context.Drivers)
+            var drivers = _seasonManager.GetDriversInSeasonBySeasonId(seasonId);
+            foreach(var driverId in drivers)
             {
-                list.Add(getPointScoringDTOForDriver(driver.Id, seasonId));
+                list.Add(getPointScoringDTOForDriver(driverId, seasonId));
             }
+            list.Sort((x,y) => y.Points.CompareTo(x.Points));
             return list;
         }
     }

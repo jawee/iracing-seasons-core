@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using iRacing_League_Scoring.Managers.Interfaces;
 using iRacing_League_Scoring.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace iRacing_League_Scoring.Managers
 {
@@ -62,6 +63,30 @@ namespace iRacing_League_Scoring.Managers
             Context.Seasons.Update(season);
             Context.SaveChanges();
             return true;
+        }
+
+        public List<long> GetDriversInSeasonBySeasonId(long seasonId)
+        {
+            var driverManager = Service.GetService<IDriverManager>();
+            var raceManager = Service.GetService<IRaceManager>();
+            var raceRowManager = Service.GetService<IRaceRowManager>();
+            var list = new List<long>();
+
+            var races = raceManager.GetRacesForSeasonId(seasonId);
+            
+            foreach(var race in races)
+            {
+                var raceRows = race.RaceRows;
+                foreach(var raceRow in raceRows)
+                {
+                    if(!list.Contains(raceRow.DriverId))
+                    {
+                        list.Add(raceRow.DriverId);
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }

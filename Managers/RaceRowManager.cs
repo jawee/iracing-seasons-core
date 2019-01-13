@@ -92,5 +92,12 @@ namespace iRacing_League_Scoring.Managers
             }
             return raceRows;
         }
+
+        public List<RaceRow> GetRaceRowsForRaceId(long raceId)
+        {
+            var raceRows = Context.RaceRows.Where(rr => rr.RaceId == raceId).ToList();
+
+            return raceRows;
+        }
     }
 }

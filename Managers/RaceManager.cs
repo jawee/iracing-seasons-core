@@ -52,7 +52,7 @@ namespace iRacing_League_Scoring.Managers
 
         public List<Race> GetRacesForSeasonId(long seasonId)
         {
-            return Context.Races.Where(r => r.SeasonId == seasonId).ToList();
+            return Context.Races.Where(r => r.SeasonId == seasonId).Include(r => r.RaceRows).ToList();
         }
 
         public bool UpdateRace(long id, Race item)
