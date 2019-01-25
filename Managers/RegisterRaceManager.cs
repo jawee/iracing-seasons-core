@@ -79,13 +79,13 @@ namespace iRacing_League_Scoring.Managers
                 foreach (var record in records)
                 {
                     var raceRow = new RaceRow();
-                    // raceRow.DriverId = GetDriverId(record);
+                    raceRow.DriverId = GetDriverId(record);
                     raceRow.Position = record.FinPos;
                     raceRow.Car = record.Car;
                     raceRow.Incidents = record.Inc;
                     raceRow.StartPosition = record.StartPos;
                     raceRow.Points = record.Pts;
-                    // raceRow.RaceId = race.Id;
+                    raceRow.RaceId = race.Id;
                     _raceRowManager.CreateRaceRow(raceRow);
                 }
             }
